@@ -26,3 +26,7 @@ Requires Firefox 128 or newer.
 3. If the total doesn't show up, open `about:addons`, select the extension, and allow access to `www.youtube.com` under "Permissions".
 
 Temporary add-ons are removed when Firefox restarts. To install it permanently, the extension has to be signed through [addons.mozilla.org](https://addons.mozilla.org/developers/).
+
+## License
+
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
