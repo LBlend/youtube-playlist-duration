@@ -1,5 +1,7 @@
-const DURATION_SELECTOR =
-  "ytd-playlist-video-renderer ytd-thumbnail-overlay-time-status-renderer";
+const DURATION_SELECTOR = [
+  "ytd-playlist-video-renderer ytd-thumbnail-overlay-time-status-renderer",
+  'ytd-browse[page-subtype="playlist"] yt-lockup-view-model yt-thumbnail-badge-view-model',
+].join(", ");
 const TOTAL_DURATION_ID = "playlist-total-duration";
 
 const UPDATE_DELAY_MS = 500;
