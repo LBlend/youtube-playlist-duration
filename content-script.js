@@ -1,22 +1,32 @@
 const DURATION_SELECTOR =
   "ytd-playlist-video-renderer ytd-thumbnail-overlay-time-status-renderer";
+const TOTAL_DURATION_ID = "playlist-total-duration";
 
 setTimeout(showTotalDuration, 5000); // Make sure the page is loaded. This is not foolproof. Fix this later
 
 function showTotalDuration() {
-  const totalDuration = getTotalSeconds();
+  renderTotalDuration(formatDuration(getTotalSeconds()));
+}
 
-  var totalDurationString = formatDuration(totalDuration);
+function renderTotalDuration(text) {
+  let element = document.getElementById(TOTAL_DURATION_ID);
+  if (!element) {
+    const parent = document.querySelector(".metadata-stats");
+    if (!parent) {
+      return;
+    }
+    element = document.createElement("yt-formatted-string");
+    element.id = TOTAL_DURATION_ID;
+    element.className = "byline-item style-scope ytd-playlist-byline-renderer";
+    element.setAttribute("is-empty", "true");
+    element.removeAttribute("is-empty");
+    parent.appendChild(element);
+  }
 
-  // Display total duration on youtube page
-  var totalDurationElement = document.createElement("yt-formatted-string");
-  totalDurationElement.className =
-    "byline-item style-scope ytd-playlist-byline-renderer";
-  totalDurationElement.setAttribute("is-empty", "true");
-  totalDurationElement.removeAttribute("is-empty");
-  var parentElement = document.getElementsByClassName("metadata-stats")[0];
-  parentElement.appendChild(totalDurationElement);
-  totalDurationElement.children[0].innerHTML = totalDurationString;
+  const target = element.firstElementChild ?? element;
+  if (target.textContent !== text) {
+    target.textContent = text;
+  }
 }
 
 function getTotalSeconds() {
