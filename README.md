@@ -1,4 +1,4 @@
-# Youtube Playlist Duration
+# Playlist Duration for YouTube
 
 A Chrome and Firefox extension that displays the total duration of a playlist
 

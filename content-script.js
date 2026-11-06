@@ -62,7 +62,7 @@
         scheduleUpdate();
       }
     } catch (error) {
-      console.warn("YouTube Playlist Duration: falling back to loaded videos", error);
+      console.warn("Playlist Duration for YouTube: falling back to loaded videos", error);
     }
   }
 
