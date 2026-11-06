@@ -3,11 +3,10 @@
     "ytd-playlist-video-renderer ytd-thumbnail-overlay-time-status-renderer",
     'ytd-browse[page-subtype="playlist"] yt-lockup-view-model yt-thumbnail-badge-view-model',
   ].join(", ");
+  const TOTAL_DURATION_ATTRIBUTE = "data-playlist-total-duration";
   const LEGACY_HEADER_SELECTOR =
     'ytd-browse[page-subtype="playlist"] .metadata-stats';
-  const PAGE_HEADER_ROW_SELECTOR =
-    'ytd-browse[page-subtype="playlist"] yt-page-header-renderer .ytContentMetadataViewModelMetadataRow:has(> .ytContentMetadataViewModelMetadataText)';
-  const TOTAL_DURATION_ATTRIBUTE = "data-playlist-total-duration";
+  const PAGE_HEADER_ROW_SELECTOR = `ytd-browse[page-subtype="playlist"] yt-page-header-renderer .ytContentMetadataViewModelMetadataRow:not([${TOTAL_DURATION_ATTRIBUTE}]):has(> .ytContentMetadataViewModelMetadataText)`;
 
   const BROWSE_URL = "/youtubei/v1/browse?prettyPrint=false";
   const MAX_PAGES = 200;
@@ -244,24 +243,32 @@
   }
 
   function renderInPageHeader(row, text) {
-    let element = row.querySelector(`[${TOTAL_DURATION_ATTRIBUTE}] > span:last-child`);
-    if (!element) {
-      const wrapper = document.createElement("span");
-      wrapper.setAttribute(TOTAL_DURATION_ATTRIBUTE, "");
-      wrapper.style.display = "contents";
+    const ownNodes = `:scope > [${TOTAL_DURATION_ATTRIBUTE}]`;
+    let totalRow = row.parentElement.querySelector(`${ownNodes}:not(span)`);
+    if (!totalRow) {
+      row.parentElement.querySelectorAll(ownNodes).forEach((node) => node.remove());
 
-      const delimiter = document.createElement("span");
-      delimiter.className = "ytContentMetadataViewModelDelimiter";
-      delimiter.textContent = "•";
+      totalRow = document.createElement("div");
+      totalRow.setAttribute(TOTAL_DURATION_ATTRIBUTE, "");
+      totalRow.className = row.className;
 
-      element = document.createElement("span");
+      const element = document.createElement("span");
       element.className =
         "ytAttributedStringHost ytContentMetadataViewModelMetadataText";
+      totalRow.append(element);
 
-      wrapper.append(delimiter, element);
-      row.append(wrapper);
+      if (row.classList.contains("ytContentMetadataViewModelMetadataRowInline")) {
+        const delimiter = document.createElement("span");
+        delimiter.setAttribute(TOTAL_DURATION_ATTRIBUTE, "");
+        delimiter.className =
+          "ytContentMetadataViewModelDelimiter ytContentMetadataViewModelDelimiterStandalone";
+        delimiter.textContent = "•";
+        row.after(delimiter, totalRow);
+      } else {
+        row.after(totalRow);
+      }
     }
-    setText(element, text);
+    setText(totalRow.firstElementChild, text);
   }
 
   function setText(element, text) {
