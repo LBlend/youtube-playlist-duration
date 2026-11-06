@@ -11,5 +11,11 @@
       "run_at": "document_end",
       "world": "MAIN"
     }
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "youtube-playlist-duration@furumo.eu",
+      "strict_min_version": "128.0"
+    }
+  }
 }
