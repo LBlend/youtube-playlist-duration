@@ -1,6 +1,6 @@
-setTimeout(yeet, 5000); // Make sure the page is loaded. This is not foolproof. Fix this later
+setTimeout(showTotalDuration, 5000); // Make sure the page is loaded. This is not foolproof. Fix this later
 
-function yeet() {
+function showTotalDuration() {
   var videoElements = document.getElementsByClassName(
     "ytd-thumbnail-overlay-time-status-renderer"
   );
@@ -31,10 +31,9 @@ function yeet() {
     }
   }
 
-  var totalDurationString = secondsToHoursMintesSeconds(totalDuration);
+  var totalDurationString = formatDuration(totalDuration);
 
   // Display total duration on youtube page
-  // I had to do this retardedness to make it work
   var totalDurationElement = document.createElement("yt-formatted-string");
   totalDurationElement.className =
     "byline-item style-scope ytd-playlist-byline-renderer";
@@ -45,7 +44,7 @@ function yeet() {
   totalDurationElement.children[0].innerHTML = totalDurationString;
 }
 
-function secondsToHoursMintesSeconds(totalSeconds) {
+function formatDuration(totalSeconds) {
   const totalMinutes = Math.floor(totalSeconds / 60);
 
   const seconds = totalSeconds % 60;
