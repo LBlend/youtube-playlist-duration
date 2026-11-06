@@ -1,6 +1,6 @@
 {
   "name": "YouTube Playlist Duration",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Displays the total duration of YouTube playlists",
   "manifest_version": 3,
   "content_scripts": [
