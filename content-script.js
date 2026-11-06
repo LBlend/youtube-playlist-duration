@@ -1,35 +1,10 @@
+const DURATION_SELECTOR =
+  "ytd-playlist-video-renderer ytd-thumbnail-overlay-time-status-renderer";
+
 setTimeout(showTotalDuration, 5000); // Make sure the page is loaded. This is not foolproof. Fix this later
 
 function showTotalDuration() {
-  var videoElements = document.getElementsByClassName(
-    "ytd-thumbnail-overlay-time-status-renderer"
-  );
-
-  var videos = Array.from(videoElements);
-
-  // Calculate the total duration
-  var totalDuration = 0;
-  for (var i = 0; i < videos.length; i++) {
-    var video = videos[i];
-    var durationText = video.innerHTML;
-    durationArray = durationText.split(":");
-
-    // Convert to int
-    for (let i = 0; i < durationArray.length; i++) {
-      var parsed = parseInt(durationArray[i]);
-      durationArray[i] = parsed;
-    }
-
-    if (isNaN(durationArray[0])) {
-      continue;
-    }
-
-    totalDuration += durationArray[durationArray.length - 1]; // seconds
-    totalDuration += durationArray[durationArray.length - 2] * 60; // minutes
-    if (durationArray.length === 3) {
-      totalDuration += durationArray[0] * 60 * 60; // hours
-    }
-  }
+  const totalDuration = getTotalSeconds();
 
   var totalDurationString = formatDuration(totalDuration);
 
@@ -42,6 +17,24 @@ function showTotalDuration() {
   var parentElement = document.getElementsByClassName("metadata-stats")[0];
   parentElement.appendChild(totalDurationElement);
   totalDurationElement.children[0].innerHTML = totalDurationString;
+}
+
+function getTotalSeconds() {
+  let total = 0;
+  for (const element of document.querySelectorAll(DURATION_SELECTOR)) {
+    total += parseDuration(element.textContent);
+  }
+  return total;
+}
+
+function parseDuration(text) {
+  const match = text.match(/\d+(?::\d+)+/);
+  if (!match) {
+    return 0;
+  }
+  return match[0]
+    .split(":")
+    .reduce((seconds, part) => seconds * 60 + Number(part), 0);
 }
 
 function formatDuration(totalSeconds) {
