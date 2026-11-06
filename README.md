@@ -27,6 +27,10 @@ Requires Firefox 128 or newer.
 
 Temporary add-ons are removed when Firefox restarts. To install it permanently, the extension has to be signed through [addons.mozilla.org](https://addons.mozilla.org/developers/).
 
+## Privacy
+
+The extension doesn't collect or share any data. See the [privacy policy](PRIVACY.md).
+
 ## License
 
 This project is licensed under the [GNU General Public License v3.0](LICENSE).
