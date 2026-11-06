@@ -4,10 +4,6 @@
   "description": "Displays the total duration of YouTube playlists",
   "manifest_version": 3,
   "action": {},
-  "permissions": [
-    "activeTab",
-    "scripting"
-  ],
   "content_scripts": [
     {
       "matches": ["https://www.youtube.com/playlist*"],
