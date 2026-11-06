@@ -2,9 +2,34 @@ const DURATION_SELECTOR =
   "ytd-playlist-video-renderer ytd-thumbnail-overlay-time-status-renderer";
 const TOTAL_DURATION_ID = "playlist-total-duration";
 
-setTimeout(showTotalDuration, 5000); // Make sure the page is loaded. This is not foolproof. Fix this later
+const UPDATE_DELAY_MS = 500;
+
+let updateScheduled = false;
+
+new MutationObserver(scheduleUpdate).observe(document.body, {
+  childList: true,
+  subtree: true,
+});
+scheduleUpdate();
+
+function scheduleUpdate() {
+  if (updateScheduled) {
+    return;
+  }
+  updateScheduled = true;
+  setTimeout(() => {
+    updateScheduled = false;
+    showTotalDuration();
+  }, UPDATE_DELAY_MS);
+}
 
 function showTotalDuration() {
+  if (location.pathname !== "/playlist") {
+    return;
+  }
+  if (!document.querySelector(DURATION_SELECTOR)) {
+    return;
+  }
   renderTotalDuration(formatDuration(getTotalSeconds()));
 }
 

@@ -6,7 +6,7 @@
   "action": {},
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/playlist*"],
+      "matches": ["https://www.youtube.com/*"],
       "js": ["content-script.js"],
       "run_at": "document_end"
     }
