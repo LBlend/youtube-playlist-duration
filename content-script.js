@@ -286,12 +286,12 @@
   }
 
   function parseDuration(text) {
-    const match = text.match(/\d+(?::\d+)+/);
+    const match = text.match(/\d+(?:[:.]\d+)+/);
     if (!match) {
       return 0;
     }
     return match[0]
-      .split(":")
+      .split(/[:.]/)
       .reduce((seconds, part) => seconds * 60 + Number(part), 0);
   }
 
