@@ -14,3 +14,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        id: release
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Build extension zip
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          TAG: ${{ steps.release.outputs.tag_name }}
+        run: |
+          files="manifest.json content-script.js LICENSE"
+          if [ -d icons ]; then
+            files="$files icons"
+          fi
+          zip -r "playlist-duration-for-youtube-$TAG.zip" $files
+
+      - name: Upload zip to release
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag_name }}
+        run: gh release upload "$TAG" "playlist-duration-for-youtube-$TAG.zip" --repo "$GITHUB_REPOSITORY"
