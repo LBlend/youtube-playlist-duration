@@ -19,7 +19,7 @@ Download this repo and make sure it's unzipped.
 
 ### Firefox
 
-Requires Firefox 128 or newer.
+Requires Firefox 140 or newer.
 
 1. Open `about:debugging#/runtime/this-firefox`.
 2. Click "Load Temporary Add-on..." and select `manifest.json` from this repo.
