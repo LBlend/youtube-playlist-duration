@@ -8,6 +8,8 @@ The extension fetches every video in the playlist from YouTube, so the total inc
 
 ![example](https://github.com/LBlend/youtube-playlist-duration/assets/24893890/f1d63eac-1ba6-40ad-95a8-415252fec801)
 
+![Screenshot of a YouTube playlist with its total duration shown in the header](assets/screenshot.png)
+
 
 ## Install
 
