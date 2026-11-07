@@ -302,6 +302,18 @@
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
 
-    return `${hours}h ${minutes}m ${seconds}s`;
+    if (!Intl.DurationFormat) {
+      return `${hours}h ${minutes}m ${seconds}s`;
+    }
+    const locale = new Intl.Locale(
+      document.documentElement.lang || navigator.language,
+      { numberingSystem: "latn" },
+    );
+    return new Intl.DurationFormat(locale, {
+      style: "narrow",
+      hoursDisplay: "always",
+      minutesDisplay: "always",
+      secondsDisplay: "always",
+    }).format({ hours, minutes, seconds });
   }
 })();

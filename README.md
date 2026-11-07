@@ -2,7 +2,9 @@
 
 A Chrome and Firefox extension that displays the total duration of a playlist
 
-*Note: This is a MVP and thus has a lot of undefined behaviour. It does not support other languages than english, for now.*
+*Note: This is a MVP and thus has a lot of undefined behaviour.*
+
+The total is shown in the same language as YouTube.
 
 The extension fetches every video in the playlist from YouTube, so the total includes videos that haven't been loaded on the page yet. If that request fails, it falls back to the videos currently loaded on the page.
 
